@@ -1,76 +1,66 @@
 package protocol
 
 import (
-	"ampq_rpc/internal/model"
-	"encoding/json"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
-	"strings"
 	"testing"
 )
 
 func TestIsCreateRequestEmpty(t *testing.T) {
 	cr := CreateRequest{}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(cr)
+	data, err := cr.Encode()
 	require.NoError(t, err)
-	require.True(t, IsCreateRequest([]byte(sb.String())))
+	require.True(t, IsCreateRequest(data))
 }
 
 func TestIsCreateRequestInitialized(t *testing.T) {
 	cr := CreateRequest{
-		User: model.User{
+		User: User{
 			Name: "Andrew",
 			Age:  123,
 			ID:   uuid.New().String(),
 		},
 	}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(cr)
+	data, err := cr.Encode()
 	require.NoError(t, err)
-	require.True(t, IsCreateRequest([]byte(sb.String())))
+	require.True(t, IsCreateRequest(data))
 }
 
 func TestIsCreateRequestIncorrectCompare(t *testing.T) {
 	gr := GetRequest{}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(gr)
+	data, err := gr.Encode()
 	require.NoError(t, err)
-	require.False(t, IsCreateRequest([]byte(sb.String())))
+	require.False(t, IsCreateRequest(data))
 }
 
 func TestIsGetRequestEmpty(t *testing.T) {
 	gr := GetRequest{}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(gr)
+	data, err := gr.Encode()
 	require.NoError(t, err)
-	require.True(t, IsGetRequest([]byte(sb.String())))
+	require.True(t, IsGetRequest(data))
 }
 
 func TestIsGetRequestInitialized(t *testing.T) {
 	gr := GetRequest{
 		Key: uuid.New().String(),
 	}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(gr)
+	data, err := gr.Encode()
 	require.NoError(t, err)
-	require.True(t, IsGetRequest([]byte(sb.String())))
+	require.True(t, IsGetRequest(data))
 }
 
 func TestIsGetRequestIncorrectCompare(t *testing.T) {
-	cr := CreateRequest{User: model.User{Name: "Me"}}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(cr)
+	cr := CreateRequest{User: User{Name: "Me"}}
+	data, err := cr.Encode()
 	require.NoError(t, err)
-	require.False(t, IsGetRequest([]byte(sb.String())))
+	require.False(t, IsGetRequest(data))
 }
 
 func TestIsResendRequestEmpty(t *testing.T) {
 	rr := ResendRequest{}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(rr)
+	data, err := rr.Encode()
 	require.NoError(t, err)
-	require.True(t, IsResendRequest([]byte(sb.String())))
+	require.True(t, IsResendRequest(data))
 }
 
 func TestIsResendRequestInitialized(t *testing.T) {
@@ -79,16 +69,14 @@ func TestIsResendRequestInitialized(t *testing.T) {
 		EndId:   uuid.New().String(),
 		Key:     "k",
 	}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(rr)
+	data, err := rr.Encode()
 	require.NoError(t, err)
-	require.True(t, IsResendRequest([]byte(sb.String())))
+	require.True(t, IsResendRequest(data))
 }
 
 func TestIsResendRequestIncorrectCompare(t *testing.T) {
 	gr := GetRequest{}
-	sb := strings.Builder{}
-	err := json.NewEncoder(&sb).Encode(gr)
+	data, err := gr.Encode()
 	require.NoError(t, err)
-	require.False(t, IsResendRequest([]byte(sb.String())))
+	require.False(t, IsResendRequest(data))
 }

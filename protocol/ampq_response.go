@@ -2,11 +2,10 @@ package protocol
 
 import (
 	"encoding/json"
-	"github.com/HekapOo-hub/ampq_rpc/internal/model"
 )
 
 type GetResponse struct {
-	User      model.User
+	User      User
 	ErrorBody string
 }
 

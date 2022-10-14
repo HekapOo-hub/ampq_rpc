@@ -1,16 +1,15 @@
 package protocol
 
 import (
-	"ampq_rpc/internal/model"
 	"encoding/json"
 	"fmt"
 	"regexp"
 )
 
 var (
-	getRequestRegexp    = regexp.MustCompile(`{\"Key\":\".*?\"}\n`)
-	createRequestRegexp = regexp.MustCompile(`{\"User\":{\"ID\":\".*?\",\"Name\":\".*?\",\"Age\":.*?}}\n`)
-	resendRequestRegexp = regexp.MustCompile(`{\"StartId\":\".*?\",\"EndId\":\".*?\",\"Key\":\".*?\"}\n`)
+	getRequestRegexp    = regexp.MustCompile(`{"Key":".*?"}`)
+	createRequestRegexp = regexp.MustCompile(`{"User":{"ID":".*?","Name":".*?","Age":.*?}}`)
+	resendRequestRegexp = regexp.MustCompile(`{"StartId":".*?","EndId":".*?","Key":".*?"}`)
 )
 
 type Encoder interface {
@@ -39,7 +38,7 @@ func ParseGetRequest(data []byte) (GetRequest, error) {
 }
 
 type CreateRequest struct {
-	User model.User
+	User User
 }
 
 func (c CreateRequest) Encode() ([]byte, error) {
