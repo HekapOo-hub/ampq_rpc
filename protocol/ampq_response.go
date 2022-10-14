@@ -1,8 +1,8 @@
 package protocol
 
 import (
-	"ampq_rpc/internal/model"
 	"encoding/json"
+	"github.com/HekapOo-hub/ampq_rpc/internal/model"
 )
 
 type GetResponse struct {
