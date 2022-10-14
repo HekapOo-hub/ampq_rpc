@@ -1,4 +1,4 @@
-module github.com/HekapOo-hub/ampq
+module github.com/HekapOo-hub/ampq_rpc
 
 go 1.18
 
