@@ -7,9 +7,9 @@ import (
 )
 
 var (
-	getRequestRegexp    = regexp.MustCompile(`{"Key":".*?"}`)
-	createRequestRegexp = regexp.MustCompile(`{"User":{"ID":".*?","Name":".*?","Age":.*?}}`)
-	resendRequestRegexp = regexp.MustCompile(`{"StartId":".*?","EndId":".*?","Key":".*?"}`)
+	getRequestRegexp    = regexp.MustCompile(`{"key":".*?"}`)
+	createRequestRegexp = regexp.MustCompile(`{"user":{"id":".*?","name":".*?","age":.*?}}`)
+	resendRequestRegexp = regexp.MustCompile(`{"start_id":".*?","end_id":".*?","key":".*?"}`)
 )
 
 type Encoder interface {
@@ -17,7 +17,7 @@ type Encoder interface {
 }
 
 type GetRequest struct {
-	Key string
+	Key string `json:"key"`
 }
 
 func (g GetRequest) Encode() ([]byte, error) {
@@ -38,7 +38,7 @@ func ParseGetRequest(data []byte) (GetRequest, error) {
 }
 
 type CreateRequest struct {
-	User User
+	User User `json:"user"`
 }
 
 func (c CreateRequest) Encode() ([]byte, error) {
@@ -59,10 +59,10 @@ func ParseCreateRequest(data []byte) (CreateRequest, error) {
 }
 
 type ResendRequest struct {
-	StartId string
-	EndId   string
+	StartId string `json:"start_id"`
+	EndId   string `json:"end_id"`
 
-	Key string
+	Key string `json:"key"`
 }
 
 func (r ResendRequest) Encode() ([]byte, error) {

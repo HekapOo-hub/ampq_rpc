@@ -5,8 +5,8 @@ import (
 )
 
 type GetResponse struct {
-	User      User
-	ErrorBody string
+	User      User   `json:"user"`
+	ErrorBody string `json:"error_body"`
 }
 
 func (g GetResponse) Encode() ([]byte, error) {
@@ -14,7 +14,7 @@ func (g GetResponse) Encode() ([]byte, error) {
 }
 
 type CreateResponse struct {
-	ErrorBody string
+	ErrorBody string `json:"error_body"`
 }
 
 func (c CreateResponse) Encode() ([]byte, error) {
@@ -22,7 +22,7 @@ func (c CreateResponse) Encode() ([]byte, error) {
 }
 
 type ResendResponse struct {
-	ErrorBody string
+	ErrorBody string `json:"error_body"`
 }
 
 func (r ResendResponse) Encode() ([]byte, error) {
