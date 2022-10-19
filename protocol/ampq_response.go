@@ -2,6 +2,11 @@ package protocol
 
 import (
 	"encoding/json"
+	"regexp"
+)
+
+var (
+	noErrResponseRegexp = regexp.MustCompile(`"error_body":""`)
 )
 
 type GetResponse struct {
@@ -27,4 +32,8 @@ type ResendResponse struct {
 
 func (r ResendResponse) Encode() ([]byte, error) {
 	return json.Marshal(r)
+}
+
+func IsNotError(data []byte) bool {
+	return noErrResponseRegexp.Match(data)
 }
